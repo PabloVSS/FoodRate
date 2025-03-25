@@ -1,35 +1,50 @@
 package com.example.foodrate.presentaion.home
 
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.launch
 
 
-class HomeViewModel {
+class HomeViewModel: ViewModel() {
 
-    private val _state = MutableStateFlow(HomeState())
-    val state: StateFlow<HomeState> = _state
+    private val intentChannel = Channel<HomeIntent>(Channel.UNLIMITED)
+    val intent = intentChannel.consumeAsFlow()
 
-    private val _navigation = Channel<NavigationEvent>()
-    val navigation = _navigation.receiveAsFlow()
+    private val _state = MutableStateFlow<HomeViewState>(HomeViewState.Idle)
+    val state: StateFlow<HomeViewState> = _state
 
-    fun processIntent(intent: HomeIntent){
-        when(intent){
-            HomeIntent.ClickLogin -> {
-                val viewModelScope
-                viewModelScope.launch {
-                    _navigation.send(NavigationEvent.NavigateToLogin)
-                }
-            }
-            HomeIntent.ClickRegister -> {
-                    _navigation.send(NavigationEvent.NavigateToRegister)
-            }
+    init {
+        handleIntents()
+    }
+
+    fun processIntent(intent: HomeIntent) {
+        viewModelScope.launch {
+            intentChannel.send(intent)
         }
     }
-    class NavigationEvent {
-        object NavigateToLogin: NavigationEvent()
-        object NavigateToRegister: NavigationEvent()
+
+    private fun handleIntents() {
+            viewModelScope.launch {
+                intent.collect { intent ->
+                    when(intent) {
+                        HomeIntent.ClickLogin -> handleAction(HomeAction.NavigateToLoginAction)
+                        HomeIntent.ClickRegister -> handleAction(HomeAction.NavigateToRegisterAction)
+                    }
+                }
+            }
+    }
+
+    private fun handleAction(action: HomeAction) {
+        viewModelScope.launch {
+            when(action) {
+                HomeAction.NavigateToLoginAction -> _state.value = HomeViewState.NavigationToLogin
+                HomeAction.NavigateToRegisterAction-> _state.value = HomeViewState.NavigateToRegister
+            }
+        }
     }
 
 }
