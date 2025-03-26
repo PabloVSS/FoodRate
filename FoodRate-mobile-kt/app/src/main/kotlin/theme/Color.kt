@@ -1,4 +1,4 @@
-package com.example.foodrate.ui.theme
+package foodrate.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -1,4 +1,4 @@
-package com.example.foodrate.presentaion.home
+package foodrate.presentaion.home.intent
 
 sealed class HomeIntent {
     object ClickLogin: HomeIntent()
