@@ -3,7 +3,6 @@ package com.example.foodrate.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import foodrate.presentaion.home.state.HomeState
 
 class HomeViewModel: ViewModel() {
 

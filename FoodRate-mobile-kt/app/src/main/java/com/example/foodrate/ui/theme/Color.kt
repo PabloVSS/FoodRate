@@ -9,7 +9,7 @@ val Tertiary = Color(0xFFFFC107) // Amarelo para destaque
 
 // Cores de fundo e superfície
 val Background = Color(0xFFFFFFFF) // Fundo claro
-val Surface = Color(0xFFF5F5F5) // Superfície de cartões
+val  Surface = Color(0xFFF5F5F5) // Superfície de cartões
 
 // Cores de texto e contraste
 val OnPrimary = Color(0xFFFFFFFF) // Texto sobre Primary

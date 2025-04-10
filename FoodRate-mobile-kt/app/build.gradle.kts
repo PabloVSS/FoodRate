@@ -60,6 +60,7 @@ dependencies {
     implementation("androidx.compose.material3:material3")
 
     implementation("androidx.navigation:navigation-compose:2.8.9")
-
+    implementation("androidx.compose.material3:material3:1.2.0") // Última versão do Material 3
+    implementation("androidx.compose.material:material-icons-extended:1.5.0") // Ícones do Material Design
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
     }
